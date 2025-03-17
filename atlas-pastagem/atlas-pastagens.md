@@ -144,7 +144,7 @@ Deve-se ainda, criar as pastas de upload com os seguintes comandos:
 mkdir -p /home/tiago/Documentos/LAPIG/atlas-pastagens/server/plataforms_files/atlas-pastagens-files/uploads/
 ```
 
-Por fim, a fim de facilitar a execução do Application Server foi desenvolvido um script nomeado `start.sh` localizado na raiz da pasta `./server`. Portanto, basta realizar a execução deste arquivo para inicializar o Application Server. A fim de identificar modificações em tempo real, o Application Server faz uso da biblioteca `always`, portanto talvez seja necessário a instalação da mesma através do comando.
+A fim de facilitar a execução do Application Server foi desenvolvido um script nomeado `start.sh` localizado na raiz da pasta `./server`. Portanto, basta realizar a execução deste arquivo para inicializar o Application Server. A fim de identificar modificações em tempo real, o Application Server faz uso da biblioteca `always`, portanto talvez seja necessário a instalação da mesma através do comando.
 
 ```shell
 sudo npm install always -g
@@ -170,7 +170,7 @@ Portanto, todas as URLs deverão ser criadas no seguinte padrão:
 
 ### Como criar um novo serviço
 
-O *Application Server* possui três pastas que armazenam os principais arquivos que permitem a disponibilização de um novo serviço ao Cerrado DPAT: 
+O *Application Server* possui três pastas que armazenam os principais arquivos que permitem a disponibilização de um novo serviço ao Atlas das Pastagens: 
 
 1. **Controller:**: Os arquivos nesta pasta são responsáveis por processar implementar a lógica da tarefa passada pela requisição HTTP.
 
@@ -178,7 +178,7 @@ O *Application Server* possui três pastas que armazenam os principais arquivos 
 
 3.  **Routes**: Os arquivos desta pasta são os responsáveis por criar as URLs de acesso *(endpoint)* a um serviço, apontar qual o controlador deverá processar a lógica para a requisição e, caso necessário, injetar o acesso ao banco de dados.
 
-Portanto, supondo que queremos criar um novo serviço para retornar os maiores desmatamentos em um determinado ano detectado pelo PRODES-Cerrado é necessário criar/alterar os seguintes arquivos:
+Portanto, supondo que queremos criar um novo serviço para retornar o municpípio com a maior área de pastagem pertencente à tabela *pasture_col9_s100*:
 
     server/routes/example.js
 ``` js
@@ -192,7 +192,7 @@ module.exports = function (app) {
 }
 ```
 
-Após a criação do *endpoint* de acesso, basta criar o arquivo com as funções desta classe de *queries* (`examplequery.js`) e a função (`Query.largest`) que irá executar a *query* especificada. Vale ressaltar que deverá ser passado dois parâmetros pela requisição, o **year** e o **amount**, que indicam de qual ano e a quantidade de desmatamentos que o usuário quer encontrar.
+Após a criação do *endpoint* de acesso, basta criar o arquivo com as funções desta classe de *queries* (`examplequery.js`) e a função (`Query.largest`) que irá executar a *query* especificada. Vale ressaltar que deverá ser passado um parâmetro pela requisição, o **year**, que indicam de qual ano o usuário quer encontrar.
 
     server/database/queries/examplequery.js
 ``` js
@@ -201,15 +201,17 @@ module.exports = function (app) {
     var Query = {};
     
     Query.largest = function (params) {
-    
-    return [{
-			id: 'largest_id',
-			sql: "SELECT view_date,county,uf, ST_ASGEOJSON(geom) FROM prodes_cerrado WHERE year = ${year} ORDER BY areamunkm DESC LIMIT ${amount}"
-		}]
-    };
 
-    return Query;
-}
+        year = params['year'];
+    
+        return [{
+                id: 'largest_id',
+                sql: `SELECT estado, MAX(area_ha) AS max_area FROM pasture_col9_s100 WHERE year = ${year} and bioma='Cerrado' GROUP BY estado ORDER BY max_area DESC LIMIT 1;`
+            }]
+        };
+
+        return Query;
+    }
 ```
 
 Após a construção do método e a *query*, basta criar o controlador `examplecontroller.js` para receber a requisição, realizar a chamada ao método para execução da *query*, coletar o resultado e enviar como resposta da requisição.
@@ -227,7 +229,8 @@ module.exports = function (app) {
 		var queryResult = request.queryResult['largest_id']
 
 		response.send(queryResult)
-		response.end()
+
+        response.end()
 
     }
     
@@ -235,30 +238,38 @@ module.exports = function (app) {
 }
 ```
 
-Por fim, este por se tratar de uma requisição HTTP do tipo `GET`, a mesma poderá ser acessada via navegador. Considerando que o server está executando em `localhost:3000` e o usuário deseja encontrar os 15 maiores desmatamentos detectados pelo PRODES-Cerrado em 2019, a URL de acesso ficará da seguinte forma: 
+Por fim, este por se tratar de uma requisição HTTP do tipo `GET`, a mesma poderá ser acessada via navegador. Considerando que o server está executando em `localhost:3000` e o usuário deseja encontrar o município com maior area de pastagem de acordo com a Coleção 9 em 2020, a URL de acesso ficará da seguinte forma: 
 
 ``` url
-http://localhost:3000/service/examplequery/largest?year=2019&amount=15
+http://localhost:3000/service/examplequery/largest?year=2020
 ```
 
-A visualização do JSON resultado da requisição acima pode ser observado no [link](https://cerradodpat.ufg.br/service/deforestation/largest?year=2019&amount=15).
+Além de requisitar pelo navegador, o serviço também poderá ser requisitado pelo *Client* a fim de disponibilizar este dado na plataforma Atlas das Pastagens. Para tal, o mesmo poderá ser feito via biblioteca [HttpClient](https://angular.io/api/common/http/HttpClient) do Angular e assim obter o arquivo JSON com os dados processados. Considerando que a variável `http` foi devidadmente injetada no construtor da classe do Angular, o serviço `ExampleService` abaixo deverá realizar a requisição e retornar um *Observable* que poderá ser utilizado pela plataforma para obtenção dos dados:
 
-Além de requisitar pelo navegador, o serviço também poderá ser requisitado pelo *WebMap Client* a fim de disponibilizar este dado na plataforma Cerrado DPAT. Para tal, o mesmo poderá ser feito via biblioteca [HttpClient](https://angular.io/api/common/http/HttpClient) do Angular e assim obter o arquivo JSON com os dados processados. Considerando que a variável `http` foi devidadmente injetada no construtor da classe do Angular, o método `getLargest()` abaixo deverá realizar a requisição e armazenar seu resultado na variável `dados_largest`:
-
-    client/src/app/views/map.component.ts
+    client/src/app/@core/services/example.service.ts
 ``` js
-getLargest() {
- 
-    let url = '/service/examplequery/largest?year=2019&amount=15'
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from "rxjs/operators";
 
-    this.http.get(url).subscribe(r => {
-        this.dados_largest = r;
-    });
+export { HttpService };
+
+@Injectable({
+  providedIn: 'root'
+})
+class ExampleService {
+    private apiURL = '/service/examplequery/largest';
+
+    constructor(private httpClient: HttpClient) {}
+
+    getData(year: int): Observable<any> {
+        return this.httpClient.post<any>(this.apiURL, {
+            headers: new HttpHeaders({
+            'year': recaptcha,
+            }),
+        })
+        .pipe(map(response => JSON.parse(response.data)));
+    }
 }
 ```
-
-## Servidor de Aplicação
-
-### Middleware para Manipulação do Banco de Dados
-
-### Como Criar um Novo Serviço
