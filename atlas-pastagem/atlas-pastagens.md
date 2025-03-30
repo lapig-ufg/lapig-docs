@@ -1,70 +1,194 @@
 Exemplo: [URL](https://lapig-ufg.github.io/d-pat/)
 
-# HOME
+# Guia de introdução
 
 ## Documentação Atlas das Pastagens
 
-O Atlas das Pastagens, público e gratuito, foi desenvolvido pelo Laboratório de Processamento de Imagens e Geoprocessamento da Universidade Federal de Goiás (Lapig/UFG), para tornar acessível os resultados e produtos, gerados no âmbito da iniciativa MapBiomas, referentes às pastagens brasileiras.
+O Atlas das Pastagens é uma plataforma pública e gratuita desenvolvida pelo [Laboratório de Processamento de Images e Geoprocessamento da Universidade Federal de Goiás (LAPIG/UFG)](https://www.lapig.iesa.ufg.br/) da [Universidade Federal de Goiás](https://ufg.br/) (LAPIG/UFG). Seu principal objetivo é disponibilizar dados e informações sobre as áreas de pastagens no Brasil, auxiliando pesquisadores, gestores públicos, setor produtivo e a sociedade na compreensão da dinâmica dessas paisagens.
 
-Essa é uma documentação para a plataforma [Atlas das Pastagens](https://atlasdaspastagens.ufg.br/), desenvolvida pelo [Laboratório de Processamento de Images e Geoprocessamento da Universidade Federal de Goiás (LAPIG/UFG)](https://www.lapig.iesa.ufg.br/).
+A plataforma foi criada no âmbito do Programa de Pesquisa em Pastagens (PPP) para tornar acessível os resultados e produtos, gerados no contexto da iniciativa [MapBiomas](https://brasil.mapbiomas.org/) e de outros projetos desenvolvidos no laboratório, reunindo um acervo abrangente de informações baseadas em sensoriamento remoto e dados oficiais. Entre os principais conjuntos de dados disponíveis, destacam-se:
+
+* **Mapeamento da Extensão e Distribuição das Pastagens:** Permite acompanhar a evolução das áreas ocupadas por pastagens no Brasil ao longo do tempo.
+
+* **Mapeamento do Vigor da Pastagem:** Indica a condição e vigor vegetativo (disponibilidade de biomassa) das pastagens, auxiliando na gestão e no planejamento do uso da terra.
+
+* **Mapa Síntese de Pastagens:** Compila informações das áreas de pastagem no Brasil a partir de fontes como TerraClass Amazon, Funcate, PROBIO, Canasat e TNC. Foi fundamental para a distribuição de amostras para desenvolvimento dos primeiros mapeamentos do MapBiomas.
+
+* **Estimativas de Estoques de Carbono no Solo:** Fornece dados sobre o carbono armazenado na camada superficial do solo (0-20 cm), contribuindo para estudos sobre o papel das pastagens no balanço de carbono e na sustentabilidade ambiental.
+
+* **Dados de Campo:** Compila dados de campo coletados por especialistas sobre a condição e produtividade das pastasgens, oferecendo uma análise detalhada da saúde e do estado das pastagens.
+
+* **Dados de Interpretação Visual:** Fornece séries temporais de Uso e Cobertura da Terra obtidos a partir de inspeção visual de imagens de satélite Landsat, que permitem acompanhar as mudanças na paisagem ao longo dos anos, revelando tendências e padrões de uso da terra.
+
+* **Dados sobre o Rebanho Bovino Brasileiro:** Derivados das pesquisas do Instituto Brasileiro de Geografia e Estatística (IBGE), fornecem uma visão integrada da relação entre pecuária e uso da terra.
+
+* **Camadas Complementares de Informações Territoriais:** Incluem registros do Cadastro Ambiental Rural (CAR), reservas legais, infraestrutura agrícola (estradas, armazéns, frigoríficos), terras indígenas, unidades de conservação e assentamentos rurais, oferecendo um contexto espacial abrangente.
+
+Esta documentação tem como objetivo apresentar a arquitetura da plataforma e detalhar suas bases de dados, metodologias e aplicações. A informação aqui registrada pode apoiar decisões futuras sobre a continuidade da plataforma e possíveis alternativas para a disponibilização dos dados.
+
+A documentação está organizada em seções para facilitar o acesso às informações. Você pode utilizar o menu lateral para navegar pelos tópicos ou usar a função de busca para encontrar conteúdos específicos.
+
+Caso tenha dúvidas ou precise de suporte, entre em contato com a equipe do LAPIG/UFG:
+
+<!-- TODO: Melhorar... Disposição dos dados de contatos muito feia. -->
+> Lapig - Laboratório de Sensoriamento Remoto e Geoprocessamento
+Campus Samambaia, Almeida Palmeiras, s/n - Chácaras Califórnia. 
+CEP 74001-970 Goiânia - Goiás - Brasil.
+lapigcoordenacao@gmail.com
+nathalia.teles@ufg.br
++55 (62) 99555-3845
+
+Explore a documentação e aproveite os dados e insights oferecidos pelo Atlas das Pastagens!
+
+## Manual do Usuário
+
+### Introdução
+
+Este manual fornece instruções detalhadas sobre a utilização do Atlas das Pastagens, uma plataforma de acesso público que disponibiliza dados geoespaciais sobre as áreas de pastagens no Brasil. Aqui, você aprenderá a acessar e interpretar as informações da plataforma, explorar as bases de dados e compreender a metodologia por trás das camadas disponibilizadas.
+
+### Acessando a Plataforma
+
+A plataforma está disponível no site oficial [Atlas das Pastagens](https://atlasdaspastagens.ufg.br/).
+
+> *Requisitos*: Utilize um navegador moderno com suporte a JavaScript para acessar todas as funcionalidades da plataforma.
+
+### Principais Funcionalidades
+
+O Atlas das Pastagens oferece um conjunto abrangente de ferramentas para explorar e analisar dados geoespaciais sobre pastagens no Brasil. Com um sistema interativo de mapas, permite visualizar, analisar e baixar informações essenciais para pesquisas científicas, gestão ambiental e tomada de decisões estratégicas.
+
+A plataforma proporciona uma experiência interativa e intuitiva com os mapas, permitindo:
+
+![Atlas Index](./assets/images/atlas-plataforma/atlas-index.png)
+![Atlas Camadas](./assets/images/atlas-plataforma/atlas-camadas.png)
+![Atlas Estatisticas](./assets/images/atlas-plataforma/atlas-estatisticas.png)
+![Atlas Gráficos](./assets/images/atlas-plataforma/atlas-graficos.png)
+![Atlas Ranking](./assets/images/atlas-plataforma/atlas-ranking.png)
+![Atlas Analise](./assets/images/atlas-plataforma/atlas-analise.png)
+![Atlas Opções](./assets/images/atlas-plataforma/atlas-opcoes.png)
+![Atlas Filtros](./assets/images/atlas-plataforma/atlas-filtros.png)
+![Atlas Swipe](./assets/images/atlas-plataforma/atlas-swipe.png)
+
+* **Gerenciamento de Camadas:** Ativar ou desativar camadas de informação para personalizar a visualização e focar em dados específicos.
+Exploração de Metadados: Acessar metadados detalhados para cada camada geoespacial, garantindo transparência e compreensão da origem e qualidade dos dados.
+
+* **Análise Espacial:** Realizar medições de área e distância, explorar a distribuição espacial dos dados e filtrar regiões específicas. Os dados do Atlas das Pastagens estão disponíveis para download em diversos formatos, facilitando sua integração em outras plataformas e softwares de análise:
+    * *Formatos Vetoriais:* Geopackage (.GPKG), Shapefile (.SHP) e/ou CSV.
+    * *Formato Matricial (raster):* Tag Image File Format (.TIF).
+
+Cada camada geoespacial conta com metadados detalhados, incluindo origem dos dados, metodologia aplicada, resolução espacial e temporal, fonte (LAPIG, MapBiomas, IBGE, entre outros) e sistema de referência cartográfico. Esses metadados garantem a rastreabilidade, a qualidade e a precisão das informações disponibilizadas, permitindo aos usuários avaliar a adequação dos dados para seus propósitos específicos.
+
+### Como citar o Atlas das Pastagens?
+
+Nossos produtos ainda não possuem um DOI, para citação dos bancos de dados disponíveis no Atlas das Pastagens sugerimos utilizar os artigos publicados acerca de cada mapeamento:
+
+* **Mapas de pastagens:** https://doi.org/10.1016/j.rse.2019.111301
+
+* **Mapas de qualidade das pastagens:** https://doi.org/10.3390/rs14041024
+
+* **Mapas de carbono:** https://doi.org/10.21203/rs.3.rs-1769589/v1
+
+Para referência da plataforma em si recomendamos utilizar o modelo de citação dos sites segundo o guia de normalização bibliográfica da sua universidade ou revista de publicação, a exemplo:
+
+> LAPIG. Atlas Digital das Pastagens Brasileiras. 2020. Available online: https://atlasdaspastagens.ufg.br/ (accessed on 22 july 2022). 
+
+No caso das citações diretas e indiretas usar o nome dos autores dos referidos artigos ou Lapig, 2022 (caso use a plataforma como referência). 
 
 ## Dados Geográficos
 
-Dados Geográficos...
+<!-- TODO: Terminar essa seção. -->
 
-### Pastagem
+<!-- Exemplo:
 
-### Vigor de Pastagem
+| Dados | Descrição | Data | Escala | Fonte |
+|:-|:-|:-:|:-:|:-:|
+| Exemplo 1 | Descrição do exemplo 1 | 2020 | 1:250.000 | Inpe |
+| Exemple 2 | Descrição do exemplo 2 | 2000 - 2024 | 1:125.000 | Inpe |
 
-### Referência Pastagem
+-->
 
-### Estoque de Carbono
+### Mapas de Pastagem
 
-### Visita de Campo Goiás
+| Dados | Descrição | Data | Escala | Fonte |
+|:-|:-|:-:|:-:|:-:|
+| Pastagem | ... | 1985 - 2023 | ... | ... |
+| Vigor de Pastagem | ... | 2000 - 2023 | ... | ... |
 
-### Visita de Campo Amazonia Portal
+### Mapa Referência
 
-### Visita de Campo Mato Grosso
+| Dados | Descrição | Data | Escala | Fonte |
+|:-|:-|:-:|:-:|:-:|
+| Referência Pastagem | ... | ... | ... | ... |
 
-### Visita de Campo Pontos Antigos
+### Mapas de Carbono
 
-### CIV Mapbiomas col.3
+| Dados | Descrição | Data | Escala | Fonte |
+|:-|:-|:-:|:-:|:-:|
+| Estoque de Carbono | ... | 1985 - 2020 | ... | ... |
 
-### CIV Mapbiomas Classes Raras
+### Visitas de Campo
 
-### CIV Mapbiomas col.6
+| Dados | Descrição | Data | Escala | Fonte |
+|:-|:-|:-:|:-:|:-:|
+| Visita de Campo Goiás | ... | 2022 | ... | ... |
+| Visita de Campo Amazonia Portal | ... | 2022 | ... | ... |
+| Visita de Campo Mato Grosso | ... | 2022 | ... | ... |
+| Visita de Campo Pontos Antigos - Com Parada | ... | ... | ... | ... |
+| Visita de Campo Pontos Antigos - Sem Parada | ... | ... | ... | ... |
 
-### Pecuária Censitária - IBGE
+### Campanhas de Inspeção Visual
 
-### Floresta Plantada - Mapbiomas
+| Dados | Descrição | Data | Escala | Fonte |
+|:-|:-|:-:|:-:|:-:|
+| Mapbiomas col.3 | ... | 1985 - 2017 | ... | ... |
+| Mapbiomas Classes Raras | ... | 2019 | ... | ... |
+| Mapbiomas col.6 | ... | 2020 | ... | ... |
 
-### Lavouras
+### Agropecuária
 
-### CAR - Prop. Rurais
+| Dados | Descrição | Data | Escala | Fonte |
+|:-|:-|:-:|:-:|:-:|
+| Rebanho Bovino em Unidaddes Animal (UA) | ... | 1985 - 2022 | ... | ... |
+| Rebanho Bovino em Nº de Cabeças (Kbcs) | ... | 1985 - 2022 | ... | ... |
+| Floresta Plantada - Mapbiomas | ... | ... | 1985 - 2020 | ... |
+| Lavoura Perene | ... | 1985 - 2020 | ... | ... |
+| Lavoura Temporária | ... | 1985 - 2020 | ... | ... |
 
-### Reserva Legal
+### Áreas Declaradas
 
-### Planejamento Hídrico
+| Dados | Descrição | Data | Escala | Fonte |
+|:-|:-|:-:|:-:|:-:|
+| CAR - Prop. Rurais | ... | ... | ... | ... |
+| Reserva Legal | ... | ... | ... | ... |
+| Planejamento Hídrico | ... | ... | ... | ... |
 
-### Malha Viária
+### Infraestrutura
 
-### Armazéns
+| Dados | Descrição | Data | Escala | Fonte |
+|:-|:-|:-:|:-:|:-:|
+| Malha Viária - Rodovias - DNIT | ... | ... | ... | ... |
+| Malha Viária - Vias Detalhadas - OSM | ... | ... | ... | ... |
+| Malha Viária | ... | ... | ... | ... |
+| Armazéns | ... | ... | ... | ... |
+| Frigorifios | ... | ... | ... | ... |
 
-### Frigorifios
+### Áreas Especiais
 
-### Terrars Indigenas
+| Dados | Descrição | Data | Escala | Fonte |
+|:-|:-|:-:|:-:|:-:|
+| Terrars Indigenas | ... | ... | ... | ... |
+| Assentamentos | ... | ... | ... | ... |
+| Comunidades Quilombolas | ... | ... | ... | ... |
+| Unidades de Conservação - Proteção Integral | ... | ... | ... | ... |
+| Unidades de Conservação - Uso Sustentável | ... | ... | ... | ... |
+| Áreas Militares | ... | ... | ... | ... |
+| Áreas Públicas Não-Destinadas | ... | ... | ... | ... |
+| Comunidades Quilombolas | ... | ... | ... | ... |
 
-### Assentamentos
+### Mosaico de Imagens
 
-### Comunidades Quilombolas
-
-### Unidades de Conservação
-
-### Áreas Militares
-
-### Áreas Públicas Não-Destinadas
-
-### Satélite
+| Dados | Descrição | Data | Escala | Fonte |
+|:-|:-|:-:|:-:|:-:|
+| Satélite | ... | ... | ... | ... |
 
 ## Métricas de Qualidade
 
